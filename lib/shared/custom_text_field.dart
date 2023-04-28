@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
+    required this.keyBoardType,
+    required this.isObscured,
+    required this.hintText,
   });
-
+  final TextInputType keyBoardType;
+  final bool isObscured;
+  final String hintText;
   @override
   Widget build(BuildContext context) {
     return TextField(
-      keyboardType: TextInputType.text,
-      obscureText: false,
+      keyboardType: keyBoardType,
+      obscureText: isObscured,
       decoration: InputDecoration(
-          hintText: "Enter your email: ",
+          hintText: hintText,
           enabledBorder:
               OutlineInputBorder(borderSide: Divider.createBorderSide(context)),
           focusedBorder:
