@@ -1,12 +1,11 @@
 import 'package:e_commerce_flower/constants.dart';
-import 'package:e_commerce_flower/pages/register_page.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +22,14 @@ class LoginPage extends StatelessWidget {
                   // SizedBox(
                   //   height: 64,
                   // ),
+                  CustomTextField(
+                    hintText: "Enter your username: ",
+                    isObscured: false,
+                    keyBoardType: TextInputType.text,
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
                   CustomTextField(
                     hintText: "Enter your email: ",
                     isObscured: false,
@@ -41,14 +48,13 @@ class LoginPage extends StatelessWidget {
                   ),
                   CustomButton(
                     bgColor: greenColor,
-                    buttonText: "Sign in",
+                    buttonText: "Register",
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account?",
+                        "Already have an account?",
                         style: TextStyle(fontSize: 16),
                       ),
 
@@ -56,14 +62,14 @@ class LoginPage extends StatelessWidget {
                       //   width: 8,
                       // ),
                       CustomTextButton(
-                          text: "Sign up",
+                          text: "Sign in",
                           onPressedFunction: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()));
+                            Navigator.pop(context);
                           }),
                     ],
+                  ),
+                  SizedBox(
+                    height: 24,
                   ),
                 ],
               ),
