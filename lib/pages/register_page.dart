@@ -1,4 +1,5 @@
 import 'package:e_commerce_flower/constants.dart';
+import 'package:e_commerce_flower/pages/login_page.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
@@ -64,7 +65,11 @@ class RegisterPage extends StatelessWidget {
                       CustomTextButton(
                           text: "Sign in",
                           onPressedFunction: () {
-                            Navigator.pop(context);
+                            // Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
                           }),
                     ],
                   ),

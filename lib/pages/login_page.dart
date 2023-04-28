@@ -58,7 +58,11 @@ class LoginPage extends StatelessWidget {
                       CustomTextButton(
                           text: "Sign up",
                           onPressedFunction: () {
-                            Navigator.push(
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => RegisterPage()));
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => RegisterPage()));

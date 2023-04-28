@@ -1,3 +1,4 @@
+import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
 import 'package:e_commerce_flower/pages/register_page.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginPage());
+        home: HomePage());
   }
 }
