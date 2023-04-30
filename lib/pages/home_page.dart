@@ -1,9 +1,12 @@
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/data/items_data.dart';
 import 'package:e_commerce_flower/models/item_model.dart';
+import 'package:e_commerce_flower/pages/details_page.dart';
+import 'package:e_commerce_flower/providers/cart.dart';
 import 'package:e_commerce_flower/widgets/custom_app_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -60,7 +63,8 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         drawer: CustomDrawer(),
-        appBar: customAppBar(),
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(60), child: CustomAppBar()),
         body: Padding(
           padding: EdgeInsets.all(16),
           child: GridView.builder(
@@ -72,7 +76,14 @@ class HomePage extends StatelessWidget {
                   mainAxisSpacing: 24),
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailsPage(
+                                  product: items[index],
+                                )));
+                  },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: GridTile(
@@ -82,25 +93,31 @@ class HomePage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                       footer: GridTileBar(
-                        // backgroundColor: Colors.black,
-                        title: Text(""),
-                        // subtitle: Text(""),
-                        leading: Text(
-                          // "\$" + testImages[index]["price"].toString(),
-                          "\$" + items[index].price.toString(),
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        trailing: IconButton(
-                          // padding: EdgeInsets.all(0),
-                          icon: Container(
-                              padding: EdgeInsets.all(0),
-                              decoration: BoxDecoration(
-                                  color: Colors.black, shape: BoxShape.circle),
-                              child: Icon(Icons.add)),
-                          onPressed: () {},
-                        ),
-                      ),
+                          // backgroundColor: Colors.black,
+                          title: Text(""),
+                          // subtitle: Text(""),
+                          leading: Text(
+                            // "\$" + testImages[index]["price"].toString(),
+                            "\$" + items[index].price.toString(),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          trailing: Consumer<Cart>(
+                              builder: (context, classInstance, child) {
+                            return IconButton(
+                              // padding: EdgeInsets.all(0),
+                              icon: Container(
+                                  padding: EdgeInsets.all(0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle),
+                                  child: Icon(Icons.add)),
+                              onPressed: () {
+                                classInstance
+                                    .addToSelectedProducts(items[index]);
+                              },
+                            );
+                          })),
                     ),
                   ),
                 );

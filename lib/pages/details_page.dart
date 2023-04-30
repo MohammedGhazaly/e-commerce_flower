@@ -1,10 +1,12 @@
 import 'package:e_commerce_flower/constants.dart';
+import 'package:e_commerce_flower/models/item_model.dart';
 import 'package:e_commerce_flower/widgets/custom_app_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({super.key});
+  const DetailsPage({super.key, required this.product});
+  final Item product;
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -18,16 +20,17 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: customAppBar(),
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(60), child: CustomAppBar()),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Image.asset("assets/img/1.jpg"),
+              Image.asset(widget.product.imgPath),
               SizedBox(
                 height: 16,
               ),
               Text(
-                "\$12.99",
+                "\$${widget.product.price}",
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(
@@ -90,7 +93,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           color: Color.fromARGB(168, 3, 65, 27),
                         ),
                         Text(
-                          "Flower Shop",
+                          widget.product.location,
                           style: TextStyle(
                               fontSize: 18,
                               color: Color.fromARGB(168, 3, 65, 27)),
