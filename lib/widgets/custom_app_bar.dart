@@ -6,13 +6,15 @@ import 'package:provider/provider.dart';
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
+    required this.pageTitle,
   });
-
+  final String pageTitle;
   @override
   Widget build(BuildContext context) {
+    // final cartInstance = Provider.of<Cart>(context);
     return AppBar(
       backgroundColor: appBarGreenColor,
-      title: Text("Home"),
+      title: Text(pageTitle),
       actions: [
         Consumer<Cart>(builder: (context, classInstance, child) {
           return Row(
@@ -29,6 +31,8 @@ class CustomAppBar extends StatelessWidget {
                             color: Color.fromARGB(211, 164, 255, 193),
                             shape: BoxShape.circle),
                         child: Text(
+                          // الطريقه التانيه اللي بنستعملها علشان نجيب الداتا
+                          // cartInstance.selectedProducts.length.toString()
                           classInstance.selectedProducts.length.toString(),
                           style: TextStyle(color: Colors.black, fontSize: 14),
                         )),
@@ -38,6 +42,7 @@ class CustomAppBar extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: Text(
+                  // cartInstance.selectedProducts.length.toString()
                   classInstance.totalPrice.toStringAsFixed(2).toString(),
                   style: TextStyle(fontSize: 18),
                 ),

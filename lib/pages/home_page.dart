@@ -64,7 +64,10 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         drawer: CustomDrawer(),
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(60), child: CustomAppBar()),
+            preferredSize: const Size.fromHeight(60),
+            child: CustomAppBar(
+              pageTitle: "Home",
+            )),
         body: Padding(
           padding: EdgeInsets.all(16),
           child: GridView.builder(

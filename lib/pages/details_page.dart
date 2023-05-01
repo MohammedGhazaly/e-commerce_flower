@@ -21,7 +21,10 @@ class _DetailsPageState extends State<DetailsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(60), child: CustomAppBar()),
+            preferredSize: const Size.fromHeight(60),
+            child: CustomAppBar(
+              pageTitle: "Item detail",
+            )),
         body: SingleChildScrollView(
           child: Column(
             children: [

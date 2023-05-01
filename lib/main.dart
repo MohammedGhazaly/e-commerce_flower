@@ -1,4 +1,5 @@
 import 'package:e_commerce_flower/models/item_model.dart';
+import 'package:e_commerce_flower/pages/checkout_page.dart';
 import 'package:e_commerce_flower/pages/details_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: HomePage()),
+          home: CheckoutPage()),
     );
   }
 }
