@@ -2,6 +2,7 @@ import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
 import 'package:e_commerce_flower/providers/progress_indicator.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
+import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_text_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,11 +30,21 @@ class _RegisterPageState extends State<RegisterPage> {
       final credintial = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailController.text, password: passwordController.text);
+      showSnackBar(
+          bgColor: Colors.green,
+          snackBarMessage: "Email registered successfully",
+          context: context);
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
-        print("The password provided is weak");
+        showSnackBar(
+            context: context,
+            bgColor: Colors.red,
+            snackBarMessage: "The password is weak");
       } else if (e.code == "email-already-in-use") {
-        print("The account already exists");
+        showSnackBar(
+            context: context,
+            bgColor: Colors.red,
+            snackBarMessage: "The email is already in use");
       }
     }
   }
