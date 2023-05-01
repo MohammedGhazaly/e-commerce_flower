@@ -34,8 +34,8 @@ class CustomAppBar extends StatelessWidget {
                     top: -0,
                     left: -0,
                     child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
                             color: Color.fromARGB(211, 164, 255, 193),
                             shape: BoxShape.circle),
                         child: Text(

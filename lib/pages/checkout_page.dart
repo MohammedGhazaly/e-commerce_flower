@@ -48,21 +48,22 @@ class CheckoutPage extends StatelessWidget {
                           ),
                         );
                       })),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: ElevatedButton(
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.all(16)),
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.all(16)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12))),
                         backgroundColor: MaterialStateProperty.all(pinkColor)),
                     onPressed: () {},
                     child: Text(
                       "Pay ${classInstance.totalPrice.toStringAsFixed(2)}",
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     )),
               )
             ],

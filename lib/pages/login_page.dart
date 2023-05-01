@@ -5,8 +5,23 @@ import 'package:e_commerce_flower/widgets/custom_text_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+
+  final passwordController = TextEditingController();
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +39,24 @@ class LoginPage extends StatelessWidget {
                   //   height: 64,
                   // ),
                   CustomTextField(
+                    textEditingController: emailController,
                     hintText: "Enter your email: ",
                     isObscured: false,
                     keyBoardType: TextInputType.emailAddress,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 24,
                   ),
                   CustomTextField(
+                    textEditingController: passwordController,
                     hintText: "Enter your password: ",
                     isObscured: true,
                     keyBoardType: TextInputType.text,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 24,
                   ),
-                  CustomButton(
+                  const CustomButton(
                     bgColor: greenColor,
                     buttonText: "Sign in",
                   ),
@@ -47,7 +64,7 @@ class LoginPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Don't have an account?",
                         style: TextStyle(fontSize: 16),
                       ),

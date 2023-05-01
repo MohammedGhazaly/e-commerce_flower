@@ -62,17 +62,17 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: CustomDrawer(),
-        appBar: PreferredSize(
+        drawer: const CustomDrawer(),
+        appBar: const PreferredSize(
             preferredSize: const Size.fromHeight(60),
             child: CustomAppBar(
               pageTitle: "Home",
             )),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: GridView.builder(
               itemCount: items.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 3 / 2,
                   crossAxisSpacing: 24,
@@ -90,19 +90,15 @@ class HomePage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: GridTile(
-                      child: Image.asset(
-                        // testImages[index]["imgPath"],
-                        items[index].imgPath,
-                        fit: BoxFit.cover,
-                      ),
                       footer: GridTileBar(
                           // backgroundColor: Colors.black,
                           title: Text(""),
                           // subtitle: Text(""),
                           leading: Text(
                             // "\$" + testImages[index]["price"].toString(),
-                            "\$" + items[index].price.toString(),
-                            style: TextStyle(
+                            // "\$" + items[index].price.toString(),
+                            "\$ ${items[index].price.toString()}",
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           trailing: Consumer<Cart>(
@@ -110,17 +106,22 @@ class HomePage extends StatelessWidget {
                             return IconButton(
                               // padding: EdgeInsets.all(0),
                               icon: Container(
-                                  padding: EdgeInsets.all(0),
-                                  decoration: BoxDecoration(
+                                  padding: const EdgeInsets.all(0),
+                                  decoration: const BoxDecoration(
                                       color: Colors.black,
                                       shape: BoxShape.circle),
-                                  child: Icon(Icons.add)),
+                                  child: const Icon(Icons.add)),
                               onPressed: () {
                                 classInstance
                                     .addToSelectedProducts(items[index]);
                               },
                             );
                           })),
+                      child: Image.asset(
+                        // testImages[index]["imgPath"],
+                        items[index].imgPath,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 );

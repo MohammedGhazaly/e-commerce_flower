@@ -12,7 +12,7 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          UserAccountsDrawerHeader(
+          const UserAccountsDrawerHeader(
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/img/test.jpg"),
@@ -49,11 +49,11 @@ class CustomDrawer extends StatelessWidget {
             title: Text("Logout"),
             leading: Icon(Icons.exit_to_app),
           ),
-          Spacer(
+          const Spacer(
             flex: 1,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 24),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 24),
             child: Text(
               "Developed by Mohammed El-sayed 2022",
               style: TextStyle(fontSize: 14),

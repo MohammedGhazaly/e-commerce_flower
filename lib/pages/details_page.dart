@@ -20,8 +20,8 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(60),
+        appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(60),
             child: CustomAppBar(
               pageTitle: "Item detail",
             )),
@@ -29,14 +29,14 @@ class _DetailsPageState extends State<DetailsPage> {
           child: Column(
             children: [
               Image.asset(widget.product.imgPath),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Text(
                 "\$${widget.product.price}",
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Padding(
@@ -44,19 +44,19 @@ class _DetailsPageState extends State<DetailsPage> {
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                        "New",
-                        style: TextStyle(fontSize: 16),
-                      ),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 255, 129, 129),
                           borderRadius: BorderRadius.circular(5)),
+                      child: const Text(
+                        "New",
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.star,
@@ -85,12 +85,12 @@ class _DetailsPageState extends State<DetailsPage> {
                         ),
                       ],
                     ),
-                    Spacer(
+                    const Spacer(
                       flex: 1,
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.edit_location,
                           size: 28,
                           color: Color.fromARGB(168, 3, 65, 27),
@@ -106,10 +106,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
-              Padding(
+              const Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Row(
                   children: [
@@ -120,7 +120,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               Padding(
@@ -132,7 +132,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 0,
               ),
               TextButton(
@@ -151,9 +151,9 @@ class _DetailsPageState extends State<DetailsPage> {
                   child: Text(
                     showMore == true ? "Show more" : "Show less",
                     // textButtonText,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 32,
               )
             ],
