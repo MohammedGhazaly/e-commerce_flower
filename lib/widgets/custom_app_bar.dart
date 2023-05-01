@@ -1,4 +1,5 @@
 import 'package:e_commerce_flower/constants.dart';
+import 'package:e_commerce_flower/pages/checkout_page.dart';
 import 'package:e_commerce_flower/providers/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,14 @@ class CustomAppBar extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CheckoutPage()));
+                      },
+                      icon: Icon(Icons.shopping_cart)),
                   Positioned(
                     top: -0,
                     left: -0,
@@ -33,7 +41,7 @@ class CustomAppBar extends StatelessWidget {
                         child: Text(
                           // الطريقه التانيه اللي بنستعملها علشان نجيب الداتا
                           // cartInstance.selectedProducts.length.toString()
-                          classInstance.selectedProducts.length.toString(),
+                          classInstance.itemCount.toString(),
                           style: TextStyle(color: Colors.black, fontSize: 14),
                         )),
                   ),

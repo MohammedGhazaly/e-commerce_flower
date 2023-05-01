@@ -1,3 +1,4 @@
+import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/providers/cart.dart';
 import 'package:e_commerce_flower/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,34 +13,62 @@ class CheckoutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(60),
           child: CustomAppBar(
             pageTitle: "Checkout",
           )),
-      body: SizedBox(
-          height: 300,
-          child: Consumer<Cart>(
-            builder: (context, classInstance, child) {
-              return ListView.builder(
-                  // itemCount: classInstance.selectedProducts.length,
-                  itemCount: 3,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: ListTile(
-                        subtitle: Text("Test"),
-                        leading: CircleAvatar(
-                            backgroundImage: AssetImage("assets/img/1.jpg")),
-                        title: Text("TEST"),
-                        trailing: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.remove),
-                        ),
-                      ),
-                    );
-                  });
-            },
-          )),
+      body: Consumer<Cart>(
+        builder: (context, classInstance, child) {
+          return Column(
+            children: [
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.73,
+                  child: ListView.builder(
+                      itemCount: classInstance.selectedProducts.length,
+                      // itemCount: 3,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          child: ListTile(
+                            subtitle: Text(
+                                "${classInstance.selectedProducts[index].location} - ${classInstance.selectedProducts[index].price} \$"),
+                            leading: CircleAvatar(
+                                backgroundImage: AssetImage(classInstance
+                                    .selectedProducts[index].imgPath)),
+                            title: Text(classInstance
+                                .selectedProducts[index].productName),
+                            trailing: IconButton(
+                              onPressed: () {
+                                classInstance.removeProductUsingIndex(
+                                    classInstance.selectedProducts[index],
+                                    index);
+                              },
+                              icon: const Icon(Icons.remove),
+                            ),
+                          ),
+                        );
+                      })),
+              Spacer(
+                flex: 1,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 24),
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.all(16)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                        backgroundColor: MaterialStateProperty.all(pinkColor)),
+                    onPressed: () {},
+                    child: Text(
+                      "Pay ${classInstance.totalPrice.toStringAsFixed(2)}",
+                      style: TextStyle(fontSize: 18),
+                    )),
+              )
+            ],
+          );
+        },
+      ),
     ));
   }
 }

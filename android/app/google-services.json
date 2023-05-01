@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "428280548358",
+    "project_id": "flower-mini-ecommerce-ca4cf",
+    "storage_bucket": "flower-mini-ecommerce-ca4cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428280548358:android:21b5d24eec452e3f680787",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce_flower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428280548358-l7q6mdrdp5nosb17litvs4b40fu3jgo7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeXuiZNz35F1kKohpJck37Zm1rDgY-nts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428280548358-l7q6mdrdp5nosb17litvs4b40fu3jgo7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,4 +10,17 @@ class Cart with ChangeNotifier {
 
     notifyListeners();
   }
+
+  removeProductUsingIndex(Item product, int index) {
+    selectedProducts.removeAt(index);
+    totalPrice -= product.price;
+    if (selectedProducts.length == 0) {
+      totalPrice = 0;
+    }
+    notifyListeners();
+  }
+
+  int get itemCount {
+    return selectedProducts.length;
+  }
 }

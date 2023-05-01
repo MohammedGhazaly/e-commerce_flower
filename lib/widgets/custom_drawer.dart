@@ -1,3 +1,5 @@
+import 'package:e_commerce_flower/pages/checkout_page.dart';
+import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -22,12 +24,18 @@ class CustomDrawer extends StatelessWidget {
               accountName: Text("Mohammed El-sayed"),
               accountEmail: Text("warendragon67@gmail.com")),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
             title: Text("Home"),
             leading: Icon(Icons.home),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CheckoutPage()));
+            },
             title: Text("My products"),
             leading: Icon(Icons.add_shopping_cart),
           ),
