@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -26,8 +26,63 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final String email = "";
 
-  final String password = "";
+  String password = "";
   final formKey = GlobalKey<FormState>();
+  // Variables for passwordChanged
+  bool isPasswordEightChar = false;
+  bool hasUpperCase = false;
+  bool hasDigits = false;
+  bool hasLowerCase = false;
+  bool hasSpecialCharacters = false;
+  onPasswordChanged({required password}) {
+    isPasswordEightChar = false;
+    hasUpperCase = false;
+    hasDigits = false;
+    hasLowerCase = false;
+    hasSpecialCharacters = false;
+    setState(() {
+      if (password.contains(RegExp(r".{8,}"))) {
+        isPasswordEightChar = true;
+      }
+      if (password.contains(RegExp(r'[A-Z]'))) {
+        hasUpperCase = true;
+      }
+      if (password.contains(RegExp(r'[0-9]'))) {
+        hasDigits = true;
+      }
+      if (password.contains(RegExp(r'[a-z]'))) {
+        hasLowerCase = true;
+      }
+      if (password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+        hasSpecialCharacters = true;
+      }
+    });
+  }
+
+  register() async {
+    try {
+      final credintial = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+      showSnackBar(
+          bgColor: Colors.green,
+          snackBarMessage: "Email registered successfully",
+          context: context);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "weak-password") {
+        showSnackBar(
+            context: context,
+            bgColor: Colors.red,
+            snackBarMessage: "The password is weak");
+      } else if (e.code == "email-already-in-use") {
+        showSnackBar(
+            context: context,
+            bgColor: Colors.red,
+            snackBarMessage: "The email is already in use");
+      }
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -50,9 +105,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // SizedBox(
-                    //   height: 64,
-                    // ),
+                    SizedBox(
+                      height: 32,
+                    ),
                     const CustomTextField(
                       hintText: "Enter your username: ",
                       isObscured: false,
@@ -86,10 +141,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     Consumer<TogglePasswordProvider>(
                         builder: (context, classInstance, child) {
                       return CustomTextField(
+                        onChangedFunction: (value) {
+                          onPasswordChanged(password: value);
+                        },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validatorFunction: (value) {
-                          if (value!.length < 8) {
-                            return "Enter at least 8 characters";
+                          if (!isPasswordEightChar ||
+                              !hasUpperCase ||
+                              !hasDigits ||
+                              !hasLowerCase ||
+                              !hasSpecialCharacters) {
+                            return "Satisfy the criteria below";
                           } else {
                             return null;
                           }
@@ -117,25 +179,32 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 24,
                     ),
                     PasswordStrengthIndicatorWidget(
+                        isSatisfied: isPasswordEightChar,
                         message: "At least 8 characters"),
                     const SizedBox(
                       height: 16,
                     ),
                     PasswordStrengthIndicatorWidget(
-                        message: "At least 1 number"),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    PasswordStrengthIndicatorWidget(message: "Has uppercase"),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    PasswordStrengthIndicatorWidget(message: "Has lowercase"),
+                        isSatisfied: hasDigits, message: "At least 1 number"),
                     const SizedBox(
                       height: 16,
                     ),
                     PasswordStrengthIndicatorWidget(
+                        isSatisfied: hasUpperCase, message: "Has uppercase"),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    PasswordStrengthIndicatorWidget(
+                        isSatisfied: hasLowerCase, message: "Has lowercase"),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    PasswordStrengthIndicatorWidget(
+                        isSatisfied: hasSpecialCharacters,
                         message: "Has a special characters"),
+                    const SizedBox(
+                      height: 12,
+                    ),
                     Consumer<ProgressIndicatorProvider>(
                         builder: (context, classInstance, child) {
                       return CustomButton(
@@ -160,12 +229,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
                     }),
                     const SizedBox(
-                      height: 24,
+                      height: 12,
                     ),
 
-                    const SizedBox(
-                      height: 24,
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -188,9 +254,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             }),
                       ],
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
+                    // const SizedBox(
+                    //   height: 24,
+                    // ),
                   ],
                 ),
               ),
@@ -199,29 +265,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-
-  register() async {
-    try {
-      final credintial = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
-      showSnackBar(
-          bgColor: Colors.green,
-          snackBarMessage: "Email registered successfully",
-          context: context);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "weak-password") {
-        showSnackBar(
-            context: context,
-            bgColor: Colors.red,
-            snackBarMessage: "The password is weak");
-      } else if (e.code == "email-already-in-use") {
-        showSnackBar(
-            context: context,
-            bgColor: Colors.red,
-            snackBarMessage: "The email is already in use");
-      }
-    }
   }
 }

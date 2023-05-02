@@ -9,7 +9,8 @@ class CustomTextField extends StatelessWidget {
       this.textEditingController,
       this.validatorFunction,
       this.autovalidateMode,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.onChangedFunction});
   final TextInputType keyBoardType;
   final bool isObscured;
   final String hintText;
@@ -17,9 +18,11 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validatorFunction;
   final AutovalidateMode? autovalidateMode;
   final Widget? suffixIcon;
+  final void Function(String)? onChangedFunction;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChangedFunction,
       autovalidateMode: autovalidateMode,
       validator: validatorFunction,
       controller: textEditingController,
