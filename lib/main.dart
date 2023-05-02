@@ -4,8 +4,9 @@ import 'package:e_commerce_flower/pages/details_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
 import 'package:e_commerce_flower/pages/register_page.dart';
-import 'package:e_commerce_flower/providers/cart.dart';
-import 'package:e_commerce_flower/providers/progress_indicator.dart';
+import 'package:e_commerce_flower/providers/cart_provider.dart';
+import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
+import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Cart()),
-        ChangeNotifierProvider(create: (context) => ProgressIndicatorProvider())
+        ChangeNotifierProvider(
+            create: (context) => ProgressIndicatorProvider()),
+        ChangeNotifierProvider(create: (context) => TogglePasswordProvider())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

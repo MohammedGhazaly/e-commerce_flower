@@ -1,6 +1,7 @@
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
-import 'package:e_commerce_flower/providers/progress_indicator.dart';
+import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
+import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
 import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_text_button.dart';
@@ -55,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: "Enter your username: ",
                       isObscured: false,
                       keyBoardType: TextInputType.text,
+                      suffixIcon: Icon(Icons.person),
                     ),
                     const SizedBox(
                       height: 24,
@@ -70,24 +72,41 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: "Enter your email: ",
                       isObscured: false,
                       keyBoardType: TextInputType.emailAddress,
+                      suffixIcon: const Icon(Icons.email),
                     ),
                     const SizedBox(
                       height: 24,
                     ),
-                    CustomTextField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validatorFunction: (value) {
-                        if (value!.length < 8) {
-                          return "Enter at least 8 characters";
-                        } else {
-                          return null;
-                        }
-                      },
-                      textEditingController: passwordController,
-                      hintText: "Enter your password: ",
-                      isObscured: true,
-                      keyBoardType: TextInputType.text,
-                    ),
+                    Consumer<TogglePasswordProvider>(
+                        builder: (context, classInstance, child) {
+                      return CustomTextField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validatorFunction: (value) {
+                          if (value!.length < 8) {
+                            return "Enter at least 8 characters";
+                          } else {
+                            return null;
+                          }
+                        },
+                        textEditingController: passwordController,
+                        hintText: "Enter your password: ",
+                        isObscured: classInstance.isObscured,
+                        keyBoardType: TextInputType.text,
+                        suffixIcon: classInstance.isObscured == true
+                            ? IconButton(
+                                onPressed: () {
+                                  classInstance.togglePassword(
+                                      isObscuredValue: false);
+                                },
+                                icon: Icon(Icons.visibility))
+                            : IconButton(
+                                onPressed: () {
+                                  classInstance.togglePassword(
+                                      isObscuredValue: true);
+                                },
+                                icon: Icon(Icons.visibility_off)),
+                      );
+                    }),
                     const SizedBox(
                       height: 24,
                     ),

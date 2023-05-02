@@ -2,7 +2,7 @@ import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/data/items_data.dart';
 import 'package:e_commerce_flower/models/item_model.dart';
 import 'package:e_commerce_flower/pages/details_page.dart';
-import 'package:e_commerce_flower/providers/cart.dart';
+import 'package:e_commerce_flower/providers/cart_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_app_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';

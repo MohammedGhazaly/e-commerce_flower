@@ -1,6 +1,6 @@
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/pages/checkout_page.dart';
-import 'package:e_commerce_flower/providers/cart.dart';
+import 'package:e_commerce_flower/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

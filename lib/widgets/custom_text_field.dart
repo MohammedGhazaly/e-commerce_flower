@@ -8,13 +8,15 @@ class CustomTextField extends StatelessWidget {
       required this.hintText,
       this.textEditingController,
       this.validatorFunction,
-      this.autovalidateMode});
+      this.autovalidateMode,
+      this.suffixIcon});
   final TextInputType keyBoardType;
   final bool isObscured;
   final String hintText;
   final TextEditingController? textEditingController;
   final String? Function(String?)? validatorFunction;
   final AutovalidateMode? autovalidateMode;
+  final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -24,6 +26,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyBoardType,
       obscureText: isObscured,
       decoration: InputDecoration(
+          suffixIcon: suffixIcon,
           hintText: hintText,
           enabledBorder:
               OutlineInputBorder(borderSide: Divider.createBorderSide(context)),
