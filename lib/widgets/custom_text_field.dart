@@ -6,14 +6,20 @@ class CustomTextField extends StatelessWidget {
       required this.keyBoardType,
       required this.isObscured,
       required this.hintText,
-      this.textEditingController});
+      this.textEditingController,
+      this.validatorFunction,
+      this.autovalidateMode});
   final TextInputType keyBoardType;
   final bool isObscured;
   final String hintText;
   final TextEditingController? textEditingController;
+  final String? Function(String?)? validatorFunction;
+  final AutovalidateMode? autovalidateMode;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      autovalidateMode: autovalidateMode,
+      validator: validatorFunction,
       controller: textEditingController,
       keyboardType: keyBoardType,
       obscureText: isObscured,
