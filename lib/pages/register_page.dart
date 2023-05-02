@@ -6,6 +6,7 @@ import 'package:e_commerce_flower/widgets/custom_button.dart';
 import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_text_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
+import 'package:e_commerce_flower/widgets/progress_strength_indicator_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +65,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     CustomTextField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validatorFunction: (value) {
-                        return value != null && !EmailValidator.validate(value)
+                        // return value != null && !EmailValidator.validate(value)
+                        //     ? "Enter a valid email"
+                        //     : null;
+                        return value != null &&
+                                !value.contains(RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))
                             ? "Enter a valid email"
                             : null;
                       },
@@ -98,18 +104,38 @@ class _RegisterPageState extends State<RegisterPage> {
                                   classInstance.togglePassword(
                                       isObscuredValue: false);
                                 },
-                                icon: Icon(Icons.visibility))
+                                icon: const Icon(Icons.visibility))
                             : IconButton(
                                 onPressed: () {
                                   classInstance.togglePassword(
                                       isObscuredValue: true);
                                 },
-                                icon: Icon(Icons.visibility_off)),
+                                icon: const Icon(Icons.visibility_off)),
                       );
                     }),
                     const SizedBox(
                       height: 24,
                     ),
+                    PasswordStrengthIndicatorWidget(
+                        message: "At least 8 characters"),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    PasswordStrengthIndicatorWidget(
+                        message: "At least 1 number"),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    PasswordStrengthIndicatorWidget(message: "Has uppercase"),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    PasswordStrengthIndicatorWidget(message: "Has lowercase"),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    PasswordStrengthIndicatorWidget(
+                        message: "Has a special characters"),
                     Consumer<ProgressIndicatorProvider>(
                         builder: (context, classInstance, child) {
                       return CustomButton(
@@ -133,6 +159,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         buttonText: "Register",
                       );
                     }),
+                    const SizedBox(
+                      height: 24,
+                    ),
+
+                    const SizedBox(
+                      height: 24,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -151,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginPage()));
+                                      builder: (context) => const LoginPage()));
                             }),
                       ],
                     ),
