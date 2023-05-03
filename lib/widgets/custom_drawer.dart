@@ -1,5 +1,6 @@
 import 'package:e_commerce_flower/pages/checkout_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -45,7 +46,9 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.help_center),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+            },
             title: Text("Logout"),
             leading: Icon(Icons.exit_to_app),
           ),

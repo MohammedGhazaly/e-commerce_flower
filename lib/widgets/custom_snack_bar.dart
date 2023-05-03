@@ -7,6 +7,6 @@ void showSnackBar(
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     backgroundColor: bgColor,
     content: Text(snackBarMessage),
-    duration: const Duration(seconds: 4),
+    duration: const Duration(seconds: 2),
   ));
 }

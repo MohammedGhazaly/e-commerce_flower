@@ -64,17 +64,22 @@ class _RegisterPageState extends State<RegisterPage> {
       final credintial = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailController.text, password: passwordController.text);
+      if (!mounted) {
+        return;
+      }
       showSnackBar(
           bgColor: Colors.green,
           snackBarMessage: "Email registered successfully",
           context: context);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
         showSnackBar(
             context: context,
             bgColor: Colors.red,
             snackBarMessage: "The password is weak");
-      } else if (e.code == "email-already-in-use") {
+      } else if (e.code == "Email already in use") {
         showSnackBar(
             context: context,
             bgColor: Colors.red,
@@ -212,7 +217,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         pressedFunction: () async {
                           if (formKey.currentState!.validate()) {
                             classInstance.changeProgressIndicator();
+
                             await register();
+
                             classInstance.changeProgressIndicator();
                           } else {
                             showSnackBar(
