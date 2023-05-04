@@ -2,6 +2,7 @@ import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/register_page.dart';
 import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
+import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
 import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_text_button.dart';
@@ -88,12 +89,29 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 24,
                   ),
-                  CustomTextField(
-                    textEditingController: passwordController,
-                    hintText: "Enter your password: ",
-                    isObscured: true,
-                    keyBoardType: TextInputType.text,
-                  ),
+                  Consumer<TogglePasswordProvider>(
+                      builder: (context, classInstance, child) {
+                    return CustomTextField(
+                      textEditingController: passwordController,
+                      hintText: "Enter your password: ",
+                      isObscured: classInstance.isObscured,
+                      keyBoardType: TextInputType.text,
+                      suffixIcon: classInstance.isObscured == true
+                          ? IconButton(
+                              onPressed: () {
+                                classInstance.togglePassword(
+                                    isObscuredValue: false);
+                              },
+                              icon: const Icon(Icons.visibility))
+                          : IconButton(
+                              onPressed: () {
+                                classInstance.togglePassword(
+                                    isObscuredValue: true);
+                              },
+                              icon: const Icon(Icons.visibility_off)),
+                    );
+                  }),
+
                   const SizedBox(
                     height: 24,
                   ),
