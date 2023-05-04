@@ -1,7 +1,5 @@
-import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/models/item_model.dart';
 import 'package:e_commerce_flower/widgets/custom_app_bar.dart';
-import 'package:e_commerce_flower/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatefulWidget {

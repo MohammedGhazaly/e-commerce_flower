@@ -1,7 +1,5 @@
 import 'package:e_commerce_flower/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton(

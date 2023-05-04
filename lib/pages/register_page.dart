@@ -10,7 +10,6 @@ import 'package:e_commerce_flower/widgets/progress_strength_indicator_widget.dar
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:email_validator/email_validator.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   final String email = "";
 
@@ -61,9 +61,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   register() async {
     try {
-      final credintial = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
       if (!mounted) {
         return;
       }

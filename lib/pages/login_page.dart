@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   logIn() async {
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
       if (!mounted) {
         return;
@@ -47,6 +47,11 @@ class _LoginPageState extends State<LoginPage> {
         showSnackBar(
             bgColor: Colors.red,
             snackBarMessage: "Wrong password provided for that user.",
+            context: context);
+      } else {
+        showSnackBar(
+            bgColor: Colors.red,
+            snackBarMessage: "Check email and password again.",
             context: context);
       }
     }

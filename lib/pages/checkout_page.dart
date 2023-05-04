@@ -2,8 +2,6 @@ import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/providers/cart_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatelessWidget {

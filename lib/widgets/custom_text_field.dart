@@ -29,6 +29,8 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyBoardType,
       obscureText: isObscured,
       decoration: InputDecoration(
+          errorStyle: const TextStyle(fontSize: 18),
+          // errorBorder: ,
           suffixIcon: suffixIcon,
           hintText: hintText,
           enabledBorder:

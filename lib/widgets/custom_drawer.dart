@@ -1,5 +1,7 @@
 import 'package:e_commerce_flower/pages/checkout_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
+import 'package:e_commerce_flower/pages/login_page.dart';
+import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +49,16 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () async {
+              print("Log out");
               await FirebaseAuth.instance.signOut();
+              showSnackBar(
+                  bgColor: Colors.green,
+                  snackBarMessage: "Come back again",
+                  context: context);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return LoginPage();
+              }));
             },
             title: Text("Logout"),
             leading: Icon(Icons.exit_to_app),
