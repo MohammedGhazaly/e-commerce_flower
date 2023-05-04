@@ -1,4 +1,5 @@
 import 'package:e_commerce_flower/constants.dart';
+import 'package:e_commerce_flower/pages/forgot_password_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/register_page.dart';
 import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
@@ -81,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   //   height: 64,
                   // ),
                   CustomTextField(
+                    suffixIcon: Icon(Icons.email),
                     textEditingController: emailController,
                     hintText: "Enter your email: ",
                     isObscured: false,
@@ -128,7 +130,18 @@ class _LoginPageState extends State<LoginPage> {
                       buttonText: "Sign in",
                     );
                   }),
-
+                  CustomTextButton(
+                      text: "Forgot password?",
+                      onPressedFunction: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => RegisterPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPasswordPage()));
+                      }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -78,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             bgColor: Colors.red,
             snackBarMessage: "The password is weak");
-      } else if (e.code == "Email already in use") {
+      } else if (e.code == "email-already-in-use") {
         showSnackBar(
             context: context,
             bgColor: Colors.red,

@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
       child: isRegistering == false
           ? Text(
               buttonText,
-              style: TextStyle(fontSize: 19),
+              style: TextStyle(fontSize: 19, color: Colors.white),
             )
           : LoadingAnimationWidget.twoRotatingArc(
               color: Colors.white, size: 20),
