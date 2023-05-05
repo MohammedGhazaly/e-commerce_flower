@@ -3,6 +3,7 @@ import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
 import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
+  resetPassword() async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text);
+      if (!mounted) return;
+      showSnackBar(
+          bgColor: Colors.green,
+          snackBarMessage: "Link is sent to verify your email.",
+          context: context);
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(
+          bgColor: Colors.red, snackBarMessage: e.code, context: context);
+    }
+  }
+
   @override
   void dispose() {
     emailController.dispose();
@@ -76,7 +93,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         pressedFunction: () async {
                           if (formKey.currentState!.validate()) {
                             classInstance.changeProgressIndicator();
-
+                            await resetPassword();
                             classInstance.changeProgressIndicator();
                           } else {
                             showSnackBar(
