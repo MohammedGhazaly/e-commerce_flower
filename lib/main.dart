@@ -3,6 +3,7 @@ import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
 import 'package:e_commerce_flower/pages/verify_email_page.dart';
 import 'package:e_commerce_flower/providers/cart_provider.dart';
+import 'package:e_commerce_flower/providers/googe_signin.dart';
 import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
 import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
@@ -17,7 +18,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(Phoenix(child: App()));
+  runApp(Phoenix(child: const App()));
 }
 
 class App extends StatelessWidget {
@@ -31,7 +32,8 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Cart()),
         ChangeNotifierProvider(
             create: (context) => ProgressIndicatorProvider()),
-        ChangeNotifierProvider(create: (context) => TogglePasswordProvider())
+        ChangeNotifierProvider(create: (context) => TogglePasswordProvider()),
+        ChangeNotifierProvider(create: (context) => GoogleSignInProvider())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

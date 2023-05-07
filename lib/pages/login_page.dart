@@ -2,6 +2,7 @@ import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/pages/forgot_password_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/register_page.dart';
+import 'package:e_commerce_flower/providers/googe_signin.dart';
 import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
 import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
@@ -10,6 +11,7 @@ import 'package:e_commerce_flower/widgets/custom_text_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -167,6 +169,76 @@ class _LoginPageState extends State<LoginPage> {
                           }),
                     ],
                   ),
+                  SizedBox(
+                    height: 17,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: const Row(
+                      children: [
+                        Expanded(
+                            child: Divider(
+                          thickness: 1,
+                        )),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "OR",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Divider(
+                          thickness: 1,
+                        )),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 18,
+                  ),
+                  Text(
+                    "Sign in with:",
+                    style: TextStyle(fontSize: 22),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Consumer<GoogleSignInProvider>(
+                      builder: (context, googleProviderInstance, child) {
+                    return Container(
+                        // margin: EdgeInsets.symmetric(vertical: 27),
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            googleProviderInstance.googlelogin();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border:
+                                    Border.all(color: Colors.red, width: 3)),
+                            child: SvgPicture.asset(
+                              width: 40,
+                              "assets/icons/google.svg",
+                              color: Colors.red,
+                              height: 40,
+                            ),
+                          ),
+                        )
+                      ],
+                    ));
+                  })
                 ],
               ),
             ),
