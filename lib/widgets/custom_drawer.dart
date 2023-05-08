@@ -1,6 +1,7 @@
 import 'package:e_commerce_flower/pages/checkout_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
+import 'package:e_commerce_flower/pages/profile_page.dart';
 import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,11 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Drawer(
       child: Column(
         children: [
-          const UserAccountsDrawerHeader(
+          UserAccountsDrawerHeader(
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/img/test.jpg"),
@@ -23,9 +25,10 @@ class CustomDrawer extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 radius: 55,
                 backgroundImage: AssetImage("assets/img/ali.jpg"),
+                // backgroundImage: NetworkImage(user.photoURL!),
               ),
               accountName: Text("Mohammed El-sayed"),
-              accountEmail: Text("warendragon67@gmail.com")),
+              accountEmail: Text(user.email!)),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -48,9 +51,18 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.help_center),
           ),
           ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()));
+            },
+            title: Text("Profile page"),
+            leading: Icon(Icons.person),
+          ),
+          ListTile(
             onTap: () async {
               print("Log out");
               await FirebaseAuth.instance.signOut();
+              // if (!mounted) return;
               showSnackBar(
                   bgColor: Colors.green,
                   snackBarMessage: "Come back again",

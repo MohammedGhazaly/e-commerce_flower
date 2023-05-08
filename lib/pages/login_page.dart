@@ -39,8 +39,9 @@ class _LoginPageState extends State<LoginPage> {
           bgColor: Colors.green,
           snackBarMessage: "Welcome back.",
           context: context);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => const HomePage()));
+      Navigator.pushNamed(context, "/homePage");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         showSnackBar(
@@ -80,9 +81,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // SizedBox(
-                  //   height: 64,
-                  // ),
+                  SizedBox(
+                    height: 32,
+                  ),
                   CustomTextField(
                     suffixIcon: Icon(Icons.email),
                     textEditingController: emailController,
@@ -115,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                               icon: const Icon(Icons.visibility_off)),
                     );
                   }),
-
                   const SizedBox(
                     height: 24,
                   ),
@@ -139,10 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                         //     context,
                         //     MaterialPageRoute(
                         //         builder: (context) => RegisterPage()));
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ForgotPasswordPage()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => ForgotPasswordPage()));
+                        Navigator.pushNamed(context, "/forgetPassword");
                       }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -162,10 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                             //     context,
                             //     MaterialPageRoute(
                             //         builder: (context) => RegisterPage()));
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()));
+                            Navigator.pushNamed(context, "/registerPage");
                           }),
                     ],
                   ),
@@ -215,8 +213,9 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            googleProviderInstance.googlelogin();
+                          onTap: () async {
+                            await googleProviderInstance.googlelogin();
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

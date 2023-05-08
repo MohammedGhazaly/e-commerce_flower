@@ -122,6 +122,24 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 24,
                     ),
+                    const CustomTextField(
+                      hintText: "Enter your age: ",
+                      isObscured: false,
+                      keyBoardType: TextInputType.number,
+                      suffixIcon: Icon(Icons.pest_control_rodent),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const CustomTextField(
+                      hintText: "Enter your job title: ",
+                      isObscured: false,
+                      keyBoardType: TextInputType.text,
+                      suffixIcon: Icon(Icons.work),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
                     CustomTextField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validatorFunction: (value) {
@@ -254,10 +272,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             text: "Sign in",
                             onPressedFunction: () {
                               // Navigator.pop(context);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()));
+                              Navigator.pop(context);
+                              // Navigator.pushReplacement(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const LoginPage())
+
+                              //         );
                             }),
                       ],
                     ),

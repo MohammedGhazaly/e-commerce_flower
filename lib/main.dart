@@ -1,6 +1,10 @@
 import 'package:e_commerce_flower/constants.dart';
+import 'package:e_commerce_flower/pages/details_page.dart';
+import 'package:e_commerce_flower/pages/forgot_password_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
+import 'package:e_commerce_flower/pages/profile_page.dart';
+import 'package:e_commerce_flower/pages/register_page.dart';
 import 'package:e_commerce_flower/pages/verify_email_page.dart';
 import 'package:e_commerce_flower/providers/cart_provider.dart';
 import 'package:e_commerce_flower/providers/googe_signin.dart';
@@ -36,6 +40,14 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => GoogleSignInProvider())
       ],
       child: MaterialApp(
+          routes: {
+            "/loginPage": (context) => const LoginPage(),
+            "/registerPage": (context) => const RegisterPage(),
+            "/forgetPassword": (context) => const ForgotPasswordPage(),
+            "/homePage": (context) => const HomePage(),
+            "/oneItemPage": (context) => const DetailsPage(),
+            "/profilePage": (context) => ProfilePage(),
+          },
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
