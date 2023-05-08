@@ -68,7 +68,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> addUser({required userId}) async {
-    print(userId);
     return await users
         .doc(userId)
         .set({

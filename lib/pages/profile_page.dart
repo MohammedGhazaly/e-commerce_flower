@@ -1,4 +1,5 @@
 import 'package:e_commerce_flower/constants.dart';
+import 'package:e_commerce_flower/widgets/data_from_fire_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -108,6 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontSize: 20,
                       ),
                     ))),
+            GetFireStoreData(documentId: user.uid)
           ],
         ),
       ),
