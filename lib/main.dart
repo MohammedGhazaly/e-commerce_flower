@@ -1,4 +1,3 @@
-import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/pages/details_page.dart';
 import 'package:e_commerce_flower/pages/forgot_password_page.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
@@ -10,11 +9,9 @@ import 'package:e_commerce_flower/providers/cart_provider.dart';
 import 'package:e_commerce_flower/providers/googe_signin.dart';
 import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
 import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
-import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 

@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_flower/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -12,10 +12,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final credential = FirebaseAuth.instance.currentUser;
-
+  @override
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -65,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 11,
                 ),
                 Text(
-                  "Email:       ",
+                  "Email: ${user.email}",
                   style: TextStyle(
                     fontSize: 17,
                   ),
@@ -74,7 +75,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 11,
                 ),
                 Text(
-                  "Created date:      ",
+                  // "Created date: ${DateFormat.yMd().format(user.metadata.creationTime!)}",
+                  "Created date: ${DateFormat("MMMM d, y").format(user.metadata.creationTime!)}",
                   style: TextStyle(
                     fontSize: 17,
                   ),
@@ -83,7 +85,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 11,
                 ),
                 Text(
-                  "Last Signed In:  ",
+                  // "Last Signed In: ${DateFormat.yMd().format(user.metadata.lastSignInTime!)}",
+                  "Last Signed In: ${DateFormat("MMMM d, y").format(user.metadata.lastSignInTime!)}",
                   style: TextStyle(
                     fontSize: 17,
                   ),

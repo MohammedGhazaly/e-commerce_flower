@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/main.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
@@ -23,12 +24,18 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+
+  final userNameController = TextEditingController();
+
+  final ageController = TextEditingController();
+  final jobTitleController = TextEditingController();
 
   final String email = "";
 
   String password = "";
   final formKey = GlobalKey<FormState>();
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
   // Variables for passwordChanged
   bool isPasswordEightChar = false;
   bool hasUpperCase = false;
@@ -60,13 +67,30 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
+  Future<void> addUser({required userId}) async {
+    print(userId);
+    return await users
+        .doc(userId)
+        .set({
+          'user_name': userNameController.text,
+          'age': ageController.text,
+          'job_title': jobTitleController.text,
+          'email': emailController.text,
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
   register() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+      await addUser(userId: credential.user!.uid);
       if (!mounted) {
         return;
       }
+
       showSnackBar(
           bgColor: Colors.green,
           snackBarMessage: "Email registered successfully",
@@ -93,6 +117,9 @@ class _RegisterPageState extends State<RegisterPage> {
     // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
+    userNameController.dispose();
+    ageController.dispose();
+    jobTitleController.dispose();
     super.dispose();
   }
 
@@ -113,7 +140,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: 32,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      validatorFunction: (value) {
+                        if (value?.trim().isEmpty ?? true) {
+                          return "Field must not be empty.";
+                        } else {
+                          if (value!.length < 6) {
+                            return "Enter 6 chars or more";
+                          } else {
+                            return null;
+                          }
+                        }
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      textEditingController: userNameController,
                       hintText: "Enter your username: ",
                       isObscured: false,
                       keyBoardType: TextInputType.text,
@@ -122,7 +162,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 24,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      textEditingController: ageController,
                       hintText: "Enter your age: ",
                       isObscured: false,
                       keyBoardType: TextInputType.number,
@@ -131,7 +173,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 24,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validatorFunction: (value) {
+                        if (value?.trim().isEmpty ?? true) {
+                          return "Field must not be empty.";
+                        } else {
+                          return null;
+                        }
+                      },
+                      textEditingController: jobTitleController,
                       hintText: "Enter your job title: ",
                       isObscured: false,
                       keyBoardType: TextInputType.text,
