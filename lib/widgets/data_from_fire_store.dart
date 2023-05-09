@@ -1,17 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_flower/providers/change_user_name_provider.dart';
+import 'package:e_commerce_flower/widgets/show_dialog_method.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class GetFireStoreData extends StatelessWidget {
+class GetFireStoreData extends StatefulWidget {
   final String documentId;
 
   const GetFireStoreData({super.key, required this.documentId});
+  @override
+  State<GetFireStoreData> createState() => _GetFireStoreDataState();
+}
+
+class _GetFireStoreDataState extends State<GetFireStoreData> {
+  final TextEditingController editUserNameController = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(documentId).get(),
+      future: users.doc(widget.documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -31,11 +47,36 @@ class GetFireStoreData extends StatelessWidget {
               SizedBox(
                 height: 11,
               ),
-              Text(
-                "Username: ${data["user_name"]}",
-                style: TextStyle(
-                  fontSize: 17,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Consumer<ChangeUserNameProvider>(
+                      builder: (context, classInstance, child) {
+                    // When we first load the page we get the data from server
+                    // when we edit we notify the listiner and get the new data
+                    return classInstance.userNameNewValue.isEmpty
+                        ? Text(
+                            "Username: ${data["user_name"]}",
+                            style: TextStyle(
+                              fontSize: 17,
+                            ),
+                          )
+                        : Text(
+                            "Username: ${classInstance.userNameNewValue}",
+                            style: TextStyle(
+                              fontSize: 17,
+                            ),
+                          );
+                  }),
+                  IconButton(
+                      onPressed: () {
+                        showDialogMethod(
+                          context,
+                          oldUserName: data["user_name"],
+                        );
+                      },
+                      icon: Icon(Icons.edit))
+                ],
               ),
               SizedBox(
                 height: 11,

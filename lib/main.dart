@@ -6,6 +6,7 @@ import 'package:e_commerce_flower/pages/profile_page.dart';
 import 'package:e_commerce_flower/pages/register_page.dart';
 import 'package:e_commerce_flower/pages/verify_email_page.dart';
 import 'package:e_commerce_flower/providers/cart_provider.dart';
+import 'package:e_commerce_flower/providers/change_user_name_provider.dart';
 import 'package:e_commerce_flower/providers/googe_signin.dart';
 import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
 import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
@@ -34,7 +35,8 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(
             create: (context) => ProgressIndicatorProvider()),
         ChangeNotifierProvider(create: (context) => TogglePasswordProvider()),
-        ChangeNotifierProvider(create: (context) => GoogleSignInProvider())
+        ChangeNotifierProvider(create: (context) => GoogleSignInProvider()),
+        ChangeNotifierProvider(create: (context) => ChangeUserNameProvider())
       ],
       child: MaterialApp(
           routes: {
