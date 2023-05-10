@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_flower/providers/change_user_name_provider.dart';
+import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:e_commerce_flower/widgets/show_dialog_method.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class _GetFireStoreDataState extends State<GetFireStoreData> {
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+    final currentUser = FirebaseAuth.instance.currentUser;
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(widget.documentId).get(),
       builder:
@@ -68,14 +69,27 @@ class _GetFireStoreDataState extends State<GetFireStoreData> {
                             ),
                           );
                   }),
-                  IconButton(
-                      onPressed: () {
-                        showDialogMethod(
-                          context,
-                          oldUserName: data["user_name"],
-                        );
-                      },
-                      icon: Icon(Icons.edit))
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              users
+                                  .doc(currentUser!.uid)
+                                  .update({"user_name": FieldValue.delete()});
+                            });
+                          },
+                          icon: Icon(Icons.delete)),
+                      IconButton(
+                          onPressed: () {
+                            showDialogMethod(
+                              context,
+                              oldUserName: data["user_name"],
+                            );
+                          },
+                          icon: Icon(Icons.edit)),
+                    ],
+                  )
                 ],
               ),
               SizedBox(
@@ -98,6 +112,27 @@ class _GetFireStoreDataState extends State<GetFireStoreData> {
                   fontSize: 17,
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          users.doc(currentUser!.uid).delete();
+                          currentUser.delete();
+                          Navigator.pushReplacementNamed(context, "/loginPage");
+                          showSnackBar(
+                              bgColor: Colors.red,
+                              snackBarMessage: "Account has been deleted",
+                              context: context);
+                        });
+                      },
+                      child: Text(
+                        "Delete user",
+                        style: TextStyle(fontSize: 20),
+                      )),
+                ],
+              )
             ],
           );
         }

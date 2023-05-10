@@ -1,14 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_flower/providers/change_user_name_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void showDialogMethod(BuildContext context, {required String oldUserName}) {
   String userNameNewValue = "";
-  CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection("users");
-  final currentUser = FirebaseAuth.instance.currentUser;
+
   showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/main.dart';
-import 'package:e_commerce_flower/pages/login_page.dart';
 import 'package:e_commerce_flower/providers/progress_indicator_provider.dart';
 import 'package:e_commerce_flower/providers/toggle_password_provider.dart';
 import 'package:e_commerce_flower/widgets/custom_button.dart';
@@ -95,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
           snackBarMessage: "Email registered successfully",
           context: context);
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => App()));
+          context, MaterialPageRoute(builder: (context) => const App()));
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
         showSnackBar(
@@ -289,6 +288,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             await register();
 
                             classInstance.changeProgressIndicator();
+
+                            // print("Hello" +
+                            //     FirebaseAuth.instance.currentUser!.uid);
                           } else {
                             showSnackBar(
                                 bgColor: Colors.red,
