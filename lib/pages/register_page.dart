@@ -11,6 +11,8 @@ import 'package:e_commerce_flower/widgets/progress_strength_indicator_widget.dar
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -30,6 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final jobTitleController = TextEditingController();
 
   final String email = "";
+  File? imgPath;
 
   String password = "";
   final formKey = GlobalKey<FormState>();
@@ -110,6 +113,21 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  uploadImage() async {
+    final pickedImg = await ImagePicker().pickImage(source: ImageSource.camera);
+    try {
+      if (pickedImg != null) {
+        setState(() {
+          imgPath = File(pickedImg.path);
+        });
+      } else {
+        print("NO img selected");
+      }
+    } catch (e) {
+      print("Error => $e");
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -137,6 +155,50 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     SizedBox(
                       height: 32,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(125, 78, 91, 110)),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          imgPath == null
+                              ? CircleAvatar(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 225, 225, 225),
+                                  radius: 70,
+                                  backgroundImage:
+                                      AssetImage("assets/img/avatar.png"),
+                                )
+                              : ClipOval(
+                                  child: Image.file(
+                                    imgPath!,
+                                    width: 140,
+                                    height: 140,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                          Positioned(
+                            bottom: -15,
+                            right: -23,
+                            child: IconButton(
+                                onPressed: () async {
+                                  await uploadImage();
+                                },
+                                icon: Icon(
+                                  Icons.add_a_photo,
+                                  color: Color.fromARGB(255, 94, 115, 128),
+                                  size: 32,
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 24,
                     ),
                     CustomTextField(
                       validatorFunction: (value) {

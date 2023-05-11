@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/widgets/data_from_fire_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,6 +16,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  File? imgPath;
+  uploadImage() async {
+    final pickedImg = await ImagePicker().pickImage(source: ImageSource.camera);
+    try {
+      if (pickedImg != null) {
+        setState(() {
+          imgPath = File(pickedImg.path);
+        });
+      } else {
+        print("NO img selected");
+      }
+    } catch (e) {
+      print("Error => $e");
+    }
+  }
+
   @override
   @override
   Widget build(BuildContext context) {
@@ -48,6 +67,51 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromARGB(125, 78, 91, 110)),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      imgPath == null
+                          ? CircleAvatar(
+                              backgroundColor:
+                                  Color.fromARGB(255, 225, 225, 225),
+                              radius: 70,
+                              backgroundImage:
+                                  AssetImage("assets/img/avatar.png"),
+                            )
+                          : ClipOval(
+                              child: Image.file(
+                                imgPath!,
+                                width: 140,
+                                height: 140,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                      Positioned(
+                        bottom: -15,
+                        right: -23,
+                        child: IconButton(
+                            onPressed: () async {
+                              await uploadImage();
+                            },
+                            icon: Icon(
+                              Icons.edit,
+                              color: Color.fromARGB(255, 94, 115, 128),
+                              size: 32,
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 24,
+              ),
               Center(
                   child: Container(
                 padding: EdgeInsets.all(11),
