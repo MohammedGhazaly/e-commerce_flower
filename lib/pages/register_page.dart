@@ -113,8 +113,8 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  uploadImage() async {
-    final pickedImg = await ImagePicker().pickImage(source: ImageSource.camera);
+  uploadImage({required ImageSource}) async {
+    final pickedImg = await ImagePicker().pickImage(source: ImageSource);
     try {
       if (pickedImg != null) {
         setState(() {
@@ -184,8 +184,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             bottom: -15,
                             right: -23,
                             child: IconButton(
-                                onPressed: () async {
-                                  await uploadImage();
+                                onPressed: () {
+                                  showModalMethod(context);
                                 },
                                 icon: Icon(
                                   Icons.add_a_photo,
@@ -407,5 +407,79 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  Future<dynamic> showModalMethod(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            padding: EdgeInsets.all(22),
+            color: Colors.white,
+            height: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    await uploadImage(ImageSource: ImageSource.camera);
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.camera,
+                        size: 32,
+                      ),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Text(
+                        "From Camera",
+                        style: TextStyle(fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 22,
+                ),
+                InkWell(
+                  onTap: () async {
+                    await uploadImage(ImageSource: ImageSource.gallery);
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.photo_outlined,
+                        size: 32,
+                      ),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Text(
+                        "From Gallery",
+                        style: TextStyle(fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(fontSize: 22, color: greenColor),
+                    ))
+              ],
+            ),
+          );
+        },
+        isScrollControlled: true);
   }
 }
