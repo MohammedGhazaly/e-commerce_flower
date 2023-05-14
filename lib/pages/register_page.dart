@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/main.dart';
@@ -9,10 +11,12 @@ import 'package:e_commerce_flower/widgets/custom_text_button.dart';
 import 'package:e_commerce_flower/widgets/custom_text_field.dart';
 import 'package:e_commerce_flower/widgets/progress_strength_indicator_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:path/path.dart' show basename;
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -33,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final String email = "";
   File? imgPath;
-
+  String? imgName;
   String password = "";
   final formKey = GlobalKey<FormState>();
   CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -69,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  Future<void> addUser({required userId}) async {
+  Future<void> addUser({required userId, required imgLink}) async {
     return await users
         .doc(userId)
         .set({
@@ -77,6 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'age': ageController.text,
           'job_title': jobTitleController.text,
           'email': emailController.text,
+          "profile_img_url": imgLink
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
@@ -87,7 +92,13 @@ class _RegisterPageState extends State<RegisterPage> {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailController.text, password: passwordController.text);
-      await addUser(userId: credential.user!.uid);
+      // Codes to add image to firestore
+      final storageRef = FirebaseStorage.instance
+          .ref("users-imgs/$imgName"); // Open fire storage
+      await storageRef
+          .putFile(imgPath!); // Put image inside the fire storage using imgPath
+      String imgUrl = await storageRef.getDownloadURL();
+      await addUser(userId: credential.user!.uid, imgLink: imgUrl);
       if (!mounted) {
         return;
       }
@@ -118,7 +129,12 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       if (pickedImg != null) {
         setState(() {
-          imgPath = File(pickedImg.path);
+          imgPath = File(pickedImg.path); //To get the image path
+          imgName = basename(pickedImg.path); //To get the image name
+          int random = Random()
+              .nextInt(9999999); // To create random numbers from 0 to 9999999
+          imgName =
+              "$random$imgName"; // To Create random name for each uploaded image
         });
       } else {
         print("NO img selected");
@@ -345,11 +361,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         isRegistering: classInstance.isLoading,
                         pressedFunction: () async {
                           if (formKey.currentState!.validate()) {
-                            classInstance.changeProgressIndicator();
+                            if (imgName == null && imgPath == null) {
+                              showSnackBar(
+                                  bgColor: Colors.red,
+                                  snackBarMessage: "Please pick an image",
+                                  context: context);
+                            } else {
+                              classInstance.changeProgressIndicator();
 
-                            await register();
+                              await register();
 
-                            classInstance.changeProgressIndicator();
+                              classInstance.changeProgressIndicator();
+                            }
 
                             // print("Hello" +
                             //     FirebaseAuth.instance.currentUser!.uid);
