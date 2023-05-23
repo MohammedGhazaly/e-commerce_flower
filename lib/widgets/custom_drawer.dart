@@ -3,6 +3,7 @@ import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:e_commerce_flower/pages/login_page.dart';
 import 'package:e_commerce_flower/pages/profile_page.dart';
 import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
+import 'package:e_commerce_flower/widgets/get_user_image_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,11 +23,7 @@ class CustomDrawer extends StatelessWidget {
                   image: DecorationImage(
                       image: AssetImage("assets/img/test.jpg"),
                       fit: BoxFit.cover)),
-              currentAccountPicture: CircleAvatar(
-                radius: 55,
-                backgroundImage: AssetImage("assets/img/ali.jpg"),
-                // backgroundImage: NetworkImage(user.photoURL!),
-              ),
+              currentAccountPicture: GetFireStoreImage(documentId: user.uid),
               accountName: Text("Mohammed El-sayed"),
               accountEmail: Text(user.email!)),
           ListTile(

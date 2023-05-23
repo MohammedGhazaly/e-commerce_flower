@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:e_commerce_flower/constants.dart';
-import 'package:e_commerce_flower/widgets/custom_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_flower/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +56,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       });
     } catch (e) {
       // showSnackBar(context, "ERROR => ${e.toString()}");
-      showSnackBar(
-          bgColor: Colors.red, snackBarMessage: e.toString(), context: context);
+      // showSnackBar(
+      //     bgColor: Colors.red, snackBarMessage: e.toString(), context: context);
     }
   }
 

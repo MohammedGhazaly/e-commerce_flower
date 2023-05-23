@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:e_commerce_flower/constants.dart';
 import 'package:e_commerce_flower/widgets/data_from_fire_store.dart';
+import 'package:e_commerce_flower/widgets/get_user_image_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -77,13 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     clipBehavior: Clip.none,
                     children: [
                       imgPath == null
-                          ? CircleAvatar(
-                              backgroundColor:
-                                  Color.fromARGB(255, 225, 225, 225),
-                              radius: 70,
-                              backgroundImage:
-                                  AssetImage("assets/img/avatar.png"),
-                            )
+                          ? GetFireStoreImage(documentId: user.uid)
                           : ClipOval(
                               child: Image.file(
                                 imgPath!,
